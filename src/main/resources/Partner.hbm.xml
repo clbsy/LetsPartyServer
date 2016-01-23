@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC
         "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-    <hibernate-mapping package="com.letsparty.service">
+    <hibernate-mapping package="com.letsparty.service.bean">
         <class name="PartnerBean" table="partner">
         
             <id name="id" column="id"></id>

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.letsparty.service.dao.Greeting;
+import com.letsparty.service.bean.Greeting;
 import com.letsparty.service.dao.PartnerDao;
 
 @RestController

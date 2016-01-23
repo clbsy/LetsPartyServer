@@ -1,4 +1,4 @@
-package com.letsparty.service.dao;
+package com.letsparty.service.bean;
 
 public class Greeting {
 

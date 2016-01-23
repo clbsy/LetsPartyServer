@@ -2,20 +2,32 @@
 <!DOCTYPE hibernate-configuration
   PUBLIC "-//Hibernate/Hibernate Configuration DTD//EN"
   "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
-    <hibernate-configuration>
-        <session-factory>
-            <!-- local connection properties -->
-            <property name="hibernate.connection.url">jdbc:mysql://101.200.142.114:3306/letsparty</property>
-            <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-            <property name="hibernate.connection.username">root</property>
-            <property name="hibernate.connection.password">123456</property>
-            
-            <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
-            <property name="connection.pool_size">128</property>
- 
- 
-            <property name="hibernate.show_sql">true</property>
-            <property name="hibernate.transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
-            <mapping resource="Partner.hbm.xml"/>
-        </session-factory>
+<hibernate-configuration>
+	<session-factory>
+		<!-- local connection properties -->
+		<property name="hibernate.connection.url">jdbc:mysql://101.200.142.114:3306/letsparty</property>
+		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="hibernate.connection.username">root</property>
+		<property name="hibernate.connection.password">123456</property>
+
+		<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+		<property name="connection.pool_size">1</property>
+
+
+		<property name="hibernate.show_sql">true</property>
+		<property name="hibernate.transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
+		
+		<!-- Disable the second-level cache -->
+		<property name="cache.provider_class">org.hibernate.cache.internal.NoCacheProvider</property>
+
+		<!-- Echo all executed SQL to stdout -->
+		<property name="show_sql">true</property>
+
+		<!-- Drop and re-create the database schema on startup -->
+		<!-- <property name="hbm2ddl.auto">create</property>-->
+		
+		<!-- <mapping resource="Partner.hbm.xml"/>-->
+		<!-- Names the annotated entity class -->
+		<mapping class="com.letsparty.service.bean.PartnerBean" />
+	</session-factory>
 </hibernate-configuration>

@@ -1,15 +1,16 @@
-package com.letsparty.service;
+package com.letsparty.service.bean;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.GenericGenerator;
+
 @Entity
-@Table(name="partner") 
+@Table(name="partner")
 public class PartnerBean {
-	
-	
 	private int id;
 	private String name;
 	private String nickName;
@@ -18,7 +19,8 @@ public class PartnerBean {
 		this.id = id;
 	}
 	@Id
-	@GeneratedValue
+	@GeneratedValue(generator="increment")
+	@GenericGenerator(name="increment", strategy = "increment")
 	public int getId(){
 		return this.id;
 	}
@@ -27,6 +29,7 @@ public class PartnerBean {
 		this.name = name;
 	}
 
+	@Column(name = "name")
 	public String getName(){
 		return this.name;
 	}
@@ -35,6 +38,7 @@ public class PartnerBean {
 		this.nickName = name;
 	}
 	
+	@Column(name = "nickname")
 	public String getNickName(){
 		return this.nickName;
 	}
