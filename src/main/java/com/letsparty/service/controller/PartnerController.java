@@ -2,6 +2,7 @@ package com.letsparty.service.controller;
 
 import java.util.concurrent.atomic.AtomicLong;
 
+import com.letsparty.service.dao.SubjectDao;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -12,9 +13,8 @@ import com.letsparty.service.dao.PartnerDao;
 
 @RestController
 public class PartnerController {
-
-	
 	private PartnerDao partnerDao = new PartnerDao();
+	private SubjectDao mSubjectDao = new SubjectDao();
 	@RequestMapping("/welcome")
 	@ResponseBody 
 	public Object getPartner(){
@@ -24,6 +24,12 @@ public class PartnerController {
 		partner.setName("test");
 		partner.setNickName("test   test");*/
 		return partnerDao.getList();
+	}
+
+	@RequestMapping("/parties")
+	@ResponseBody
+	public Object getParties(){
+		return mSubjectDao.getAllBean();
 	}
 	
 	private static final String template = "Hello, %s!";

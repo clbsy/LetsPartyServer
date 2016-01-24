@@ -1,3 +1,5 @@
 .settings
 target
 .project
+.idea
+letsparty.iml
