@@ -4,7 +4,6 @@
 	<groupId>letsparty</groupId>
 	<artifactId>letsparty</artifactId>
 	<version>v0.1</version>
-	<packaging>war</packaging>
 	<name>letsparty</name>
 	<description />
 	<properties>
