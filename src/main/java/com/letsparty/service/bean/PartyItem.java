@@ -108,6 +108,15 @@ public class PartyItem {
         this.image = image;
     }
 
+    @Column(name = "thumbnail")
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
     @Column(name = "partner_id")
     public int getHolderID() {
         return holderID;
@@ -128,5 +137,6 @@ public class PartyItem {
     private long time = 0;
     private String detail = null;
     private String image = null;
+    private String thumbnail = null;
     private int holderID = -1;
 }
