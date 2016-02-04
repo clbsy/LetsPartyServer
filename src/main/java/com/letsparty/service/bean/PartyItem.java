@@ -10,11 +10,11 @@ public class PartyItem {
     @Id
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -118,15 +118,33 @@ public class PartyItem {
     }
 
     @Column(name = "partner_id")
-    public int getHolderID() {
+    public long getHolderID() {
         return holderID;
     }
 
-    public void setHolderID(int holderID) {
+    public void setHolderID(long holderID) {
         this.holderID = holderID;
     }
 
-    int id = -1;
+    @Column(name = "fav")
+    public long getFav() {
+        return fav;
+    }
+
+    public void setFav(long fav) {
+        this.fav = fav;
+    }
+
+    @Column(name = "comments")
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
+    long id = -1;
     private String topical = null;
     private String county = null;
     private String province = null;
@@ -138,5 +156,7 @@ public class PartyItem {
     private String detail = null;
     private String image = null;
     private String thumbnail = null;
-    private int holderID = -1;
+    private long fav;
+    private String comments;
+    private long holderID = -1;
 }

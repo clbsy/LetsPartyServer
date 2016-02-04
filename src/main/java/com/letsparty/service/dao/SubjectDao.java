@@ -2,6 +2,7 @@ package com.letsparty.service.dao;
 
 import com.letsparty.service.LetsPartyHibernateUtil;
 import com.letsparty.service.bean.PartyItem;
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 import java.util.List;
@@ -26,12 +27,46 @@ public class SubjectDao implements IBeanDao<PartyItem> {
     @Override
     public  List<PartyItem> getAllBean() {
         Session session = LetsPartyHibernateUtil.getSessionFactory().openSession();
-//		String hql="select * from partner";
-//		List list= session.createSQLQuery(hql).list();
         session.beginTransaction();
         List<PartyItem> result = session.createQuery("from PartyItem").list();
         session.getTransaction().commit();
         session.close();
         return result;
+    }
+
+    public String updateComments(long id, String comments) {
+        System.out.println("updateComments - id : " + id + ", comments : " + comments);
+        Session session = LetsPartyHibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        String hql = "UPDATE PartyItem PI set PI.comments = :comments "  +
+                "WHERE PI.id = :id";
+        Query query = session.createQuery(hql);
+        query.setParameter("id", id);
+        query.setParameter("comments", comments);
+        int result = query.executeUpdate();
+        session.getTransaction().commit();
+        session.close();
+        System.out.println("Rows affected: " + result);
+        if (result > 0) {
+            return comments;
+        }
+
+        return "Nothing changed.";
+    }
+
+    public String getComments(long id) {
+        Session session = LetsPartyHibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        String hql = "SELECT PI.comments FROM PartyItem PI WHERE PI.id = :id";
+        Query query = session.createQuery(hql);
+        query.setParameter("id", id);
+        List<String> result = query.list();
+        session.getTransaction().commit();
+        session.close();
+        if ((null != result) && (0 < result.size())) {
+            return result.get(0);
+        }
+
+        return null;
     }
 }
