@@ -6,6 +6,7 @@ import com.letsparty.service.bean.Greeting;
 import com.letsparty.service.dao.PartnerDao;
 import com.letsparty.service.dao.SubjectDao;
 import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -59,10 +60,42 @@ public class PartnerController {
 		newComment.setContent(comment);
 		System.out.println("saveComment - newComment : " + newComment.getJson());
 		if (commentArray.toString().contains(newComment.getJson().toString())) {
-			return commentArray.toString();
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("resultCode", 1);
+			jsonObject.put("error", "Duplicate comment");
+			return jsonObject.toString();
 		}
 		commentArray.put(newComment.getJson());
-		return mSubjectDao.updateComments(subjectId, commentArray.toString());
+		int result = mSubjectDao.updateComments(subjectId, commentArray.toString());
+		JSONObject jsonObject = new JSONObject();
+		if (result > 0) {
+			jsonObject.put("resultCode", 0);
+			jsonObject.put("comments", commentArray);
+		} else {
+			jsonObject.put("resultCode", 1);
+			jsonObject.put("error", "Update db error.");
+		}
+		return jsonObject.toString();
+	}
+
+	@RequestMapping("/update_fav")
+	public String updateFav(@RequestParam(value="subjectId", defaultValue="-1") long subjectId) {
+		if (0 > subjectId) {
+			return "subjectId < 0";
+		}
+
+		long fav = mSubjectDao.getFav(subjectId);
+		fav++;
+		int result = mSubjectDao.updateFav(subjectId, fav);
+		JSONObject jsonObject = new JSONObject();
+		if (result > 0) {
+			jsonObject.put("resultCode", 0);
+			jsonObject.put("fav", fav);
+		} else {
+			jsonObject.put("resultCode", 1);
+			jsonObject.put("error", "Update db error.");
+		}
+		return jsonObject.toString();
 	}
 	
 	private static final String template = "Hello, %s!";

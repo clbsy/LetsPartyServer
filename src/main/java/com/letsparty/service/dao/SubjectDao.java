@@ -34,7 +34,7 @@ public class SubjectDao implements IBeanDao<PartyItem> {
         return result;
     }
 
-    public String updateComments(long id, String comments) {
+    public int updateComments(long id, String comments) {
         System.out.println("updateComments - id : " + id + ", comments : " + comments);
         Session session = LetsPartyHibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
@@ -47,11 +47,7 @@ public class SubjectDao implements IBeanDao<PartyItem> {
         session.getTransaction().commit();
         session.close();
         System.out.println("Rows affected: " + result);
-        if (result > 0) {
-            return comments;
-        }
-
-        return "Nothing changed.";
+        return result;
     }
 
     public String getComments(long id) {
@@ -68,5 +64,37 @@ public class SubjectDao implements IBeanDao<PartyItem> {
         }
 
         return null;
+    }
+
+    public long getFav(long id) {
+        Session session = LetsPartyHibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        String hql = "SELECT PI.fav FROM PartyItem PI WHERE PI.id = :id";
+        Query query = session.createQuery(hql);
+        query.setParameter("id", id);
+        List<Long> result = query.list();
+        session.getTransaction().commit();
+        session.close();
+        if ((null != result) && (0 < result.size())) {
+            return result.get(0);
+        }
+
+        return 0;
+    }
+
+    public int updateFav(long id, long fav) {
+        System.out.println("updateFav - id : " + id + ", fav : " + fav);
+        Session session = LetsPartyHibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        String hql = "UPDATE PartyItem PI set PI.fav = :fav "  +
+                "WHERE PI.id = :id";
+        Query query = session.createQuery(hql);
+        query.setParameter("id", id);
+        query.setParameter("fav", fav);
+        int result = query.executeUpdate();
+        session.getTransaction().commit();
+        session.close();
+        System.out.println("Rows affected: " + result);
+        return result;
     }
 }
